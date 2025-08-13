@@ -1,6 +1,6 @@
 # Simul2000 Velocity Model Converter
 
-A Python utility to convert multiple depth slices of **P-wave velocity** into a single **3D velocity model** in [Simul2000]([(http://www.geology.wisc.edu/~thurber/simul2000/)]) format.
+A Python utility to convert multiple depth slices of **P-wave velocity** into a single **3D velocity model** in [Simul2000]([http://www.geology.wisc.edu/~thurber/simul2000/]) format.
 
 ## 📋 Features
 - Reads multiple ASCII files containing P-wave velocity values at different depths.
