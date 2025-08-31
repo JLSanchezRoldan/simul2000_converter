@@ -1,9 +1,10 @@
 import os
 import numpy as np
+from tqdm import tqdm
 
 # Configuration
 RATIO_VP_VS = 1.73
-input_folder = "mTAB3D"
+input_folder = "dat"
 output_file = "velocity_model.mod"
 
 def parse_depth_from_filename(fname):
@@ -28,8 +29,9 @@ def main():
 
     X_coords, Y_coords, Vp_data = None, None, []
 
-    for depth, filepath in depths_files:
-        data = np.loadtxt(filepath)
+    print("Reading input files...")
+    for depth, filepath in tqdm(depths_files, desc="Depth layers"):
+        data = np.loadtxt(filepath, delimiter=',')
         if X_coords is None:
             X_coords = np.unique(data[:,0])
             Y_coords = np.unique(data[:,1])
@@ -44,11 +46,13 @@ def main():
         f.write(" ".join(map(str, Z_coords)) + "\n")
         f.write(" 0 0 0\n 0 0 0\n")
 
-        for vp_slice in Vp_data:
+        #for vp_slice in Vp_data:
+        for vp_slice in tqdm(Vp_data, desc="Depth slices (Vp)"):
             for row in vp_slice:
                 f.write(" ".join(map(str, row)) + "\n")
 
-        for _ in Vp_data:
+        #for _ in Vp_data:
+        for vp_slice in tqdm(Vp_data, desc="Depth slices (Vp/Vs ratio)"):
             for _ in Y_coords:
                 f.write(" ".join([str(RATIO_VP_VS)] * len(X_coords)) + "\n")
 
